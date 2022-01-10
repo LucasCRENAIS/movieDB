@@ -10,6 +10,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class MoviePlotUploadCommand extends Command
 {
@@ -18,11 +19,13 @@ class MoviePlotUploadCommand extends Command
 
     private $movieRepository;
     private $em;
+    private $parameterBag;
 
-    public function __construct(MovieRepository $movieRepository, EntityManagerInterface $em) 
+    public function __construct(MovieRepository $movieRepository, EntityManagerInterface $em, ParameterBagInterface $parameterBag)
     {
         $this->movieRepository = $movieRepository;
         $this->em = $em;
+        $this->parameterBag = $parameterBag;
         parent::__construct();
     }
 
@@ -38,8 +41,8 @@ class MoviePlotUploadCommand extends Command
     
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $omdbApiUrl = "http://www.omdbapi.com/?apikey=8436e9eb&t=";
-
+        $key = $this->parameterBag->get('app.omdbapi');
+        $omdbApiUrl = "http://www.omdbapi.com/?apikey=".$key."=";
 
         $io = new SymfonyStyle($input, $output);
 

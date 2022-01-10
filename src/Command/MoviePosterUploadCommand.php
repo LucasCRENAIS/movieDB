@@ -10,6 +10,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class MoviePosterUploadCommand extends Command
 {
@@ -17,13 +18,15 @@ class MoviePosterUploadCommand extends Command
 
     private $movieRepository;
     private $em;
+    private $parameterBag;
 
     //! attention il faut lancer le constructeur du parent 
 
-    public function __construct(MovieRepository $movieRepository, EntityManagerInterface $em) 
+    public function __construct(MovieRepository $movieRepository, EntityManagerInterface $em, ParameterBagInterface $parameterBag)
     {
         $this->movieRepository = $movieRepository;
         $this->em = $em;
+        $this->parameterBag = $parameterBag;
         parent::__construct();
     }
 
@@ -52,8 +55,8 @@ class MoviePosterUploadCommand extends Command
             $movies = $this->movieRepository->findAll();
         }
 
-        // ici on pourrait stocker l'api key en tant que paramètre (cad dans services.yaml)
-        $omdbApiUrl = "http://www.omdbapi.com/?apikey=8436e9eb&t=";
+        $key = $this->parameterBag->get('app.omdbapi');
+        $omdbApiUrl = "http://www.omdbapi.com/?apikey=".$key."=";
 
         foreach ($movies as $movie)
         {
