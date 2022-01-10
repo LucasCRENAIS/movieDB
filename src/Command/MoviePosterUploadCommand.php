@@ -76,7 +76,7 @@ class MoviePosterUploadCommand extends Command
 
                 if ($omdbApiResultObj->Response === "True")
                 {
-                    // si il n'y a pas d'affiche référecée
+                    // si il n'y a pas d'affiche référencée
                     if ($omdbApiResultObj->Poster != "N/A")
                     {
                         // stocker l'url de l'affiche dans la propriété Poster du Movie
@@ -84,13 +84,11 @@ class MoviePosterUploadCommand extends Command
                         $movie->setPoster($omdbApiResultObj->Poster);
                         $this->em->flush();
                     }
-                    
+
+                    $io->success('posters ajoutés !');
                 }
             }
         }
-        
-        $io->success('posters ajoutés !');
-
         return Command::SUCCESS;
     }
 }

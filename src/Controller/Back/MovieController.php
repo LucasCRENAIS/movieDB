@@ -62,8 +62,8 @@ class MovieController extends AbstractController
             $application->run($plotInput, $output);
             $application->run($posterInput, $output);
 
-            $this->addFlash('success', 'ajout effectué');
-            $this->addFlash('info', $output->fetch());
+            $this->addFlash('success', 'ajout effectué ' .PHP_EOL.$output->fetch());
+
             return $this->redirectToRoute('movie_index');
         }
 

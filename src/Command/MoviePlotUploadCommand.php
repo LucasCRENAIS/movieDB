@@ -65,6 +65,8 @@ class MoviePlotUploadCommand extends Command
 
                 if ($omdbApiResultObj->Response === "True")
                 {
+                    $io->success('résumés ajoutés');
+
                     // si il n'y a pas de résumé référencé
                     if ($omdbApiResultObj->Plot != "N/A")
                     {
@@ -78,9 +80,6 @@ class MoviePlotUploadCommand extends Command
             }
     
         }
-
-        $io->success('résumés ajoutés');
-
         return Command::SUCCESS;
     }
 }
