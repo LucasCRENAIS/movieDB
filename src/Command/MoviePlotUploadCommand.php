@@ -33,20 +33,28 @@ class MoviePlotUploadCommand extends Command
     {
         $this
             ->setDescription('a command to upload film plots')
-            // ->addArgument('arg1', InputArgument::OPTIONAL, 'Argument description')
-            // ->addOption('option1', null, InputOption::VALUE_NONE, 'Option description')
+            ->addArgument('movieId', InputArgument::OPTIONAL, 'movie Id')
         ;
     }
 
     
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $key = $this->parameterBag->get('app.omdbapi');
-        $omdbApiUrl = "http://www.omdbapi.com/?apikey=".$key."=";
-
         $io = new SymfonyStyle($input, $output);
 
-        $movies = $this->movieRepository->findAll();
+        // si l'argument movie Id est renseigné
+        $movieId = $input->getArgument('movieId');
+        if ($movieId) {
+            $movie = $this->movieRepository->find($movieId);
+            $movies = [$movie];
+        }
+        else
+        {
+            // récupérer la liste de tous les movies
+            $movies = $this->movieRepository->findAll();
+        }
+        $key = $this->parameterBag->get('app.omdbapi');
+        $omdbApiUrl = "http://www.omdbapi.com/?apikey=".$key."=";
 
         foreach ($movies as $movie)
 
@@ -65,17 +73,15 @@ class MoviePlotUploadCommand extends Command
 
                 if ($omdbApiResultObj->Response === "True")
                 {
-                    $io->success('résumés ajoutés');
-
-                    // si il n'y a pas de résumé référencé
                     if ($omdbApiResultObj->Plot != "N/A")
                     {
                         // stocker l'url du résumé dans la propriété Plot du Movie
                         echo ' --  ' . $omdbApiResultObj->Plot . "\r"; 
                         $movie->setPlot($omdbApiResultObj->Plot);
                         $this->em->flush();
+
+                        $io->success('résumés ajoutés');
                     }
-                    
                 }
             }
     

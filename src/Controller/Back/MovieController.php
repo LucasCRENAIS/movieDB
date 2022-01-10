@@ -53,14 +53,21 @@ class MovieController extends AbstractController
 
             $plotInput = new ArrayInput([
                 'command' => 'app:movie:plot-upload',
+                'movieId' => $movie->getId()
             ]);
             $posterInput = new ArrayInput([
                 'command' => 'app:movie:poster-upload',
+                'movieId' => $movie->getId()
+            ]);
+            $castingInput = new ArrayInput([
+                'command' => 'app:movie:casting-upload',
+                'movieId' => $movie->getId()
             ]);
 
             $output = new BufferedOutput();
             $application->run($plotInput, $output);
             $application->run($posterInput, $output);
+            $application->run($castingInput, $output);
 
             $this->addFlash('success', 'ajout effectué ' .PHP_EOL.$output->fetch());
 

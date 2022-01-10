@@ -2,6 +2,7 @@
 
 namespace App\Command;
 
+use App\Entity\Person;
 use App\Repository\MovieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
@@ -12,15 +13,15 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
-class MoviePosterUploadCommand extends Command
+class MovieCastingUploadCommand extends Command
 {
-    protected static $defaultName = 'app:movie:poster-upload';
+    protected static $defaultName = 'app:movie:casting-upload';
 
     private $movieRepository;
     private $em;
     private $parameterBag;
 
-    //! attention il faut lancer le constructeur du parent 
+    //! attention il faut lancer le constructeur du parent
 
     public function __construct(MovieRepository $movieRepository, EntityManagerInterface $em, ParameterBagInterface $parameterBag)
     {
@@ -33,7 +34,7 @@ class MoviePosterUploadCommand extends Command
     protected function configure()
     {
         $this
-            ->setDescription('Ajouter les posters des films')
+            ->setDescription('Ajouter les acteurs des films')
             ->addArgument('movieId', InputArgument::OPTIONAL, 'movie Id')
             // ->addOption('option1', null, InputOption::VALUE_NONE, 'Option description')
         ;
@@ -49,7 +50,7 @@ class MoviePosterUploadCommand extends Command
             $movie = $this->movieRepository->find($movieId);
             $movies = [$movie];
         }
-        else 
+        else
         {
             // récupérer la liste de tous les movies
             $movies = $this->movieRepository->findAll();
@@ -60,10 +61,7 @@ class MoviePosterUploadCommand extends Command
 
         foreach ($movies as $movie)
         {
-
-            if (empty($movie->getPoster()))
-            {
-                echo 'updating movie ' . $movie->getId() . "\r";; 
+                echo 'updating movie ' . $movie->getId() . "\r";;
                 $movies = $this->movieRepository->findAll();
                 // on gère les espaces
                 $titleToSearch = str_replace(' ', '+', $movie->getTitle());
@@ -76,18 +74,24 @@ class MoviePosterUploadCommand extends Command
 
                 if ($omdbApiResultObj->Response === "True")
                 {
-                    if ($omdbApiResultObj->Poster != "N/A")
+                    if ($omdbApiResultObj->Actors != "N/A")
                     {
-                        // stocker l'url de l'affiche dans la propriété Poster du Movie
-                        echo ' --  ' . $omdbApiResultObj->Poster . "\r"; 
-                        $movie->setPoster($omdbApiResultObj->Poster);
-                        $this->em->flush();
+                        $actors = explode(", ",$omdbApiResultObj->Actors);
 
-                        $io->success('posters ajoutés !');
+                        foreach ($actors as $actor)
+                        {
+                            echo ' --  ' . $actor . "\r";
+                            $person = new Person();
+                            $person->setName($actor);
+                            $this->em->persist($person);
+                        }
+                        $this->em->flush();
                     }
+
+                    $io->success('casting ajouté !');
                 }
             }
-        }
+
         return Command::SUCCESS;
     }
 }
