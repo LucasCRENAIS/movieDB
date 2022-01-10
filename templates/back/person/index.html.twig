@@ -1,0 +1,47 @@
+{% extends 'base_admin.html.twig' %}
+{% block menu_person %} active {% endblock %}
+
+{% block title %}Person index{% endblock %}
+
+{% block body %}
+    <h1>Person index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>CreatedAt</th>
+                <th>UpdatedAt</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for person in people %}
+            <tr>
+                <td>{{ person.id }}</td>
+                <td>{{ person.name }}</td>
+                <td>{{ person.createdAt ? person.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ person.updatedAt ? person.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a class="btn btn-secondary" href="{{ path('person_show', {'id': person.id}) }}">show</a>
+                    {% if is_granted('ROLE_ADMIN')%}
+                    <a class="btn btn-primary" href="{{ path('person_edit', {'id': person.id}) }}">edit</a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% if is_granted('ROLE_ADMIN')%}
+    <a class="btn btn-success" href="{{ path('person_new') }}">Create new</a>
+    <a class="btn btn-warning" href="{{ path('back_admin') }}">retour à la page administration</a>
+    {% else %}
+    <a class="btn btn-warning" href="{{ path('homepage') }}">retour à la page d'accueil</a>
+    {% endif %}
+    
+{% endblock %}

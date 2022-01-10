@@ -1,0 +1,48 @@
+{% extends 'base_admin.html.twig' %}
+{% block menu_department %} active {% endblock %}
+
+
+{% block title %}Department index{% endblock %}
+
+{% block body %}
+    <h1>Department index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>CreatedAt</th>
+                <th>UpdatedAt</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for department in departments %}
+            <tr>
+                <td>{{ department.id }}</td>
+                <td>{{ department.name }}</td>
+                <td>{{ department.createdAt ? department.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ department.updatedAt ? department.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a class="btn btn-secondary" href="{{ path('department_show', {'id': department.id}) }}">show</a>
+                    {% if is_granted('ROLE_ADMIN')%} 
+                    <a class="btn btn-primary" href="{{ path('department_edit', {'id': department.id}) }}">edit</a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% if is_granted('ROLE_ADMIN')%} 
+    <a class="btn btn-success" href="{{ path('department_new') }}">Create new</a>
+
+    <a class="btn btn-warning" href="{{ path('back_admin') }}">retour à la page administration</a>
+    {% else %}
+    <a class="btn btn-warning" href="{{ path('homepage') }}">retour à la page d'accueil</a>
+    {% endif %}
+{% endblock %}

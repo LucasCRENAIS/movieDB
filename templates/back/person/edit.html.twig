@@ -1,0 +1,15 @@
+{% extends 'base_admin.html.twig' %}
+{% block menu_person %} active {% endblock %}
+
+{% block title %}Edit Person{% endblock %}
+
+{% block body %}
+    <h1>Edit Person</h1>
+
+    {{ include('back/person/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <button type="button" class="btn btn-warning"><a href="{{ path('person_index') }}">back to list</a></button>
+
+    {{ include('back/person/_delete_form.html.twig') }}
+
+{% endblock %}

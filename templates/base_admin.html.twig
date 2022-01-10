@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.79.0">
+    <title>MovieDB</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/navbar-fixed/">
+
+    
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
+    
+    <!-- Custom styles for this template -->
+    <link href="{{ asset('css/style-theme.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+
+    {% block stylesheets %}{% endblock %}
+    <title>{% block title %}MovieDB ! {% endblock %}</title>
+
+  </head>
+  <body>
+    
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand"
+        {% if is_granted('ROLE_ADMIN')%} 
+          href="{{ path('back_admin') }}"
+        {% else %} 
+          href="{{ path('homepage') }}"
+        {% endif %}><h2>MovieDB</h2></a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+        {% if app.user %}
+            <li class="nav-item active">
+            <a class="nav-link {% block menu_genre %}{% endblock %}" href="{{ path('genre_index') }}">Genre</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link  {% block menu_movie %}{% endblock %}" href="{{ path('movie_index') }}">Movie</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link {% block menu_person %}{% endblock %}" href="{{ path('person_index') }}">Person</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link {% block menu_department %}{% endblock %}" href="{{ path('department_index') }}">Department</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link {% block menu_team %}{% endblock %}" href="{{ path('team_index') }}">Team</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link {% block menu_job %}{% endblock %}" href="{{ path('job_index') }}">Job</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link {% block menu_casting %}{% endblock %}" href="{{ path('casting_index') }}">Casting</a>
+            </li>
+            {% if is_granted('ROLE_ADMIN') %}
+            <li class="nav-item">
+            <a class="nav-link {% block menu_users %}{% endblock %}" href="{{ path('user_index') }}">Users</a>
+            </li>
+            {% endif %}
+        </ul> 
+          </div>
+          <div class="text-white px-2 text-nowrap">
+            <a id = "user-text" href="{{ path('user_edit', {id: app.user.id}) }}">{{ app.user.username }}</a> ( {{ app.user.displayRole }} )
+          </div>
+          <div class="text-white text-nowrap">
+            <a href="{{  path('app_logout') }}" class="btn btn-warning">Déconnexion </a>
+          </div>
+          {% else %}
+            <a href="{{  path('app_login') }}" class="btn btn-warning">Connexion </a>
+          {% endif %}
+      </div>
+    </nav>
+    <main class="container">
+    <div class="bg-white p-5 rounded">
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert alert-{{ label }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+        {% block body %}{% endblock %}
+    </div>
+    </main>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+    {% block javascripts %}{% endblock %}
+
+      
+  </body>
+</html>

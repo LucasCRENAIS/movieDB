@@ -1,0 +1,13 @@
+
+{% extends 'base_admin.html.twig' %}
+{% block menu_users %} active {% endblock %}
+
+
+{% block body %}
+    <h1>Create new User</h1>
+
+    {{ include('back/user/_form.html.twig') }}
+
+    <a class="btn btn-warning m-1" href="{{ path('user_index') }}">back to list</a>
+    
+{% endblock %}

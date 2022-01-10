@@ -1,0 +1,47 @@
+{% extends 'base_admin.html.twig' %}
+{% block menu_job %} active {% endblock %}
+
+{% block title %}Job{% endblock %}
+
+{% block body %}
+    <h1>Job</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ job.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ job.name }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ job.createdAt ? job.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>UpdatedAt</th>
+                <td>{{ job.updatedAt ? job.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <br>
+
+    <h2>Département associé</h2>
+
+    <ul class="list-group list-group-flush">
+
+        <li class="list-group-item">{{ job.department.name }}</li>
+
+    </ul>
+    <br>
+    <hr>
+
+    <a class="btn btn-warning" href="{{ path('job_index') }}">back to list</a>
+
+    <a class="btn btn-primary" href="{{ path('job_edit', {'id': job.id}) }}">edit</a>
+
+    {{ include('back/job/_delete_form.html.twig') }}
+{% endblock %}

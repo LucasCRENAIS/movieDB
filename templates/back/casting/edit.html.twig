@@ -1,0 +1,14 @@
+{% extends 'base_admin.html.twig' %}
+{% block menu_casting %} active {% endblock %}
+
+{% block title %}Edit Casting{% endblock %}
+
+{% block body %}
+    <h1>Edit Casting</h1>
+
+    {{ include('back/casting/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <button type="button" class="btn btn-warning"><a href="{{ path('casting_index') }}">back to list</a></button>
+
+    {{ include('back/casting/_delete_form.html.twig') }}
+{% endblock %}

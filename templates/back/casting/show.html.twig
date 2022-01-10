@@ -1,0 +1,36 @@
+{% extends 'base_admin.html.twig' %}
+{% block menu_casting %} active {% endblock %}
+
+{% block title %}Casting{% endblock %}
+
+{% block body %}
+    <h1>Casting</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Role</th>
+                <td>{{ casting.role }}</td>
+            </tr>
+            <tr>
+                <th>Person Name</th>
+                <td>{{ casting.person.name }}</td>
+            </tr>
+            <tr>
+                <th>Movie Title</th>
+                <td>{{ casting.movie.title }}</td>
+            </tr>
+            <tr>
+                <th>CreditOrder</th>
+                <td>{{ casting.creditOrder }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a class="btn btn-warning" href="{{ path('casting_index') }}">back to list</a>
+
+    <a class="btn btn-primary" href="{{ path('casting_edit', {'id': casting.id}) }}">edit</a>
+
+    {{ include('back/casting/_delete_form.html.twig') }}
+    
+{% endblock %}

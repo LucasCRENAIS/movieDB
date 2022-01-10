@@ -1,0 +1,12 @@
+{% extends 'base_admin.html.twig' %}
+{% block menu_person %} active {% endblock %}
+
+{% block title %}New Person{% endblock %}
+
+{% block body %}
+    <h1>Create new Person</h1>
+
+    {{ include('back/person/_form.html.twig') }}
+
+    <button type="button" class="btn btn-warning"><a href="{{ path('person_index') }}">back to list</a></button>
+{% endblock %}

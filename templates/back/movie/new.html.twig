@@ -1,0 +1,12 @@
+{% extends 'base_admin.html.twig' %}
+{% block menu_movie %} active {% endblock %}
+
+{% block title %}New Movie{% endblock %}
+
+{% block body %}
+    <h1>Create new Movie</h1>
+
+    {{ include('back/movie/_form.html.twig') }}
+
+    <button type="button" class="btn btn-warning"><a href="{{ path('movie_index') }}">back to list</a></button>
+{% endblock %}

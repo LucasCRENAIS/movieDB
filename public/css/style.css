@@ -1,0 +1,53 @@
+a{
+    color: black;
+    text-decoration: none;
+}
+
+a:hover {
+    color:rgb(61, 61, 61);
+    text-decoration: none;
+    transform: translateY(1px);
+}
+
+#user-text{
+    color:white;
+}
+#user-text:hover {
+    color:#ffc107;
+
+}
+
+
+
+.list-group-item-warning:hover {
+    transform: translateX(1px);
+}
+
+.list-group-item-danger:hover {
+    transform: translateX(1px);
+}
+
+.list-group-item-success:hover {
+    transform: translateX(1px);
+}
+
+.list-group-item-primary:hover {
+    transform: translateX(1px);
+}
+
+.list-group-item-secondary:hover {
+    transform: translateX(1px);
+}
+
+.list-group-item-light:hover {
+    transform: translateX(1px);
+}
+
+.list-group-item-dark:hover {
+    transform: translateX(1px);
+}
+
+.list-group-item-info:hover {
+    transform: translateX(1px);
+}
+

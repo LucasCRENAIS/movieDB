@@ -1,0 +1,26 @@
+{% extends 'base_admin.html.twig' %}
+
+{% block title %}Page administrateur{% endblock %}
+
+{% block body %}
+    <h1>Page administrateur</h1>
+    <br>
+    <ul class="list-group">
+        <li class="list-group-item"><strong>Gestion des catégories</strong></li>
+        <li class="list-group-item list-group-item-primary"><a href="{{ path('casting_index') }}">Casting</a></li>
+        <li class="list-group-item list-group-item-dark"><a href="{{ path('movie_index') }}">Movie</a></li>
+        <li class="list-group-item list-group-item-secondary"><a href="{{ path('person_index') }}">Person</a></li>
+        <li class="list-group-item list-group-item-success"><a href="{{ path('genre_index') }}">Genre</a></li>
+        <li class="list-group-item list-group-item-warning"><a href="{{ path('job_index') }}">Job</a></li>
+        <li class="list-group-item list-group-item-info"><a href="{{ path('team_index') }}">Team</a></li>
+        <li class="list-group-item list-group-item-danger"><a href="{{ path('department_index') }}">Department</a></li>
+    </ul>
+    <br>
+    <ul class="list-group">
+        <li class="list-group-item list-group-item-light"><a href="{{ path('user_index') }}">Gestion des utilisateurs</a></li>
+    </ul>
+
+    <br>
+<a class="btn btn-warning" href="{{ path('homepage') }}">retour à la liste de film</a>
+
+{% endblock %}

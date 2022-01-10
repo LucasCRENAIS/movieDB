@@ -1,0 +1,12 @@
+{% extends 'base_admin.html.twig' %}
+{% block menu_casting %} active {% endblock %}
+
+{% block title %}New Casting{% endblock %}
+
+{% block body %}
+    <h1>Create new Casting</h1>
+
+    {{ include('back/casting/_form.html.twig') }}
+
+    <button type="button" class="btn btn-warning"><a href="{{ path('casting_index') }}">back to list</a></button>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'base_admin.html.twig' %}
+{% block menu_team %} active {% endblock %}
+
+{% block title %}Team{% endblock %}
+
+{% block body %}
+    <h1>Team</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ team.id }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a class="btn btn-warning" href="{{ path('team_index') }}">back to list</a>
+
+    <a class="btn btn-primary" href="{{ path('team_edit', {'id': team.id}) }}">edit</a>
+
+    {{ include('back/team/_delete_form.html.twig') }}
+{% endblock %}

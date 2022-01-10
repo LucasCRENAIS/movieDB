@@ -1,0 +1,46 @@
+{% extends 'base_admin.html.twig' %}
+{% block menu_genre %} active {% endblock %}
+
+{% block title %}Genre{% endblock %}
+
+{% block body %}
+    <h1>Genre</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ genre.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ genre.name }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ genre.createdAt ? genre.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>UpdatedAt</th>
+                <td>{{ genre.updatedAt ? genre.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+<br>
+
+    <h2>Liste des films associés</h2>
+
+<ul class="list-group list-group-flush">
+{% for movie in genre.movies %}
+    <li class="list-group-item">{{ movie.title }}</li>
+{% endfor %}
+</ul>
+<br>
+<hr>
+    <a class="btn btn-warning" href="{{ path('genre_index') }}">back to list</a>
+
+    <a class="btn btn-primary" href="{{ path('genre_edit', {'id': genre.id}) }}">edit</a>
+
+    {{ include('back/genre/_delete_form.html.twig') }}
+    
+{% endblock %}

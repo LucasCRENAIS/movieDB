@@ -1,0 +1,12 @@
+{% extends 'base_admin.html.twig' %}
+{% block menu_team %} active {% endblock %}
+
+{% block title %}New Team{% endblock %}
+
+{% block body %}
+    <h1>Create new Team</h1>
+
+    {{ include('back/team/_form.html.twig') }}
+
+   <button type="button" class="btn btn-warning"><a href="{{ path('team_index') }}">back to list</a></button>
+{% endblock %}

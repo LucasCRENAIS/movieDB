@@ -1,0 +1,12 @@
+{% extends 'base_admin.html.twig' %}
+{% block menu_job %} active {% endblock %}
+
+{% block title %}New Job{% endblock %}
+
+{% block body %}
+    <h1>Create new Job</h1>
+
+    {{ include('back/job/_form.html.twig') }}
+
+    <button type="button" class="btn btn-warning"><a href="{{ path('job_index') }}">back to list</a></button>
+{% endblock %}

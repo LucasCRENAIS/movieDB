@@ -1,0 +1,43 @@
+{% extends 'base_admin.html.twig' %}
+
+{% block title %}Détails{% endblock %}
+
+{% block body %}
+
+<h1>{{ movie.title }}</h1>
+
+{% for genre in movie.genres %}
+<span class="badge rounded-pill bg-info text-dark mb-3">{{ genre.name }}</span>
+{% endfor %}
+
+
+<div class="card-invisible mb-3" style="max-width: 960px;">
+  <div class="row g-0">
+    <div class="col-md-4">
+    {% if movie.poster %}
+      <img src="{{ movie.poster }}"/>
+    {% endif %}
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        {% if movie.plot %}
+            <h2 class="card-title">Résumé</h2>
+            <p class="card-text">{{ movie.plot }}</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<h2>Casting</h2>
+
+<ul class="list-group list-group-flush">
+{# on utilise le filtre sort de twig qui permet de trier les données d'un tableau #}
+{% for casting in movie.castings|sort((a, b) => a.creditOrder <=> b.creditOrder) %}
+    <li class="list-group-item">Ordre d'apparition : {{ casting.creditOrder }} - {{ casting.role }} : {{ casting.person.name }}</li>
+{% endfor %}
+</ul>
+
+<a class="btn btn-warning m-1" href="{{ path('homepage') }}">Retour à l'accueil</a>
+{% endblock %}

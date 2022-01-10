@@ -1,0 +1,18 @@
+{% extends 'base_admin.html.twig' %}
+
+{% block title %}Bienvenue sur movieDB{% endblock %}
+
+{% block body %}
+
+
+<ul class="list-group list-group-flush">
+    {% for movie in movie_list %}
+    <li class="list-group-item list-group-item-light"><a href="{{ path('movie_show', {id : movie.id}) }}">{{ movie.title }}</a></li>
+    {% endfor %}
+</ul>
+<hr>
+{% if is_granted('ROLE_ADMIN')%}
+<a class="btn btn-warning m-1" href="{{ path('back_admin') }}">accès à la page administration</a>
+{% elseif is_granted('ROLE_USER')%}
+{% endif %}
+{% endblock %}

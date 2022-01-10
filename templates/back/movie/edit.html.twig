@@ -1,0 +1,14 @@
+{% extends 'base_admin.html.twig' %}
+{% block menu_movie %} active {% endblock %}
+
+{% block title %}Edit Movie{% endblock %}
+
+{% block body %}
+    <h1>Edit Movie</h1>
+
+    {{ include('back/movie/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <button type="button" class="btn btn-warning"><a href="{{ path('movie_index') }}">back to list</a></button>
+
+    {{ include('back/movie/_delete_form.html.twig') }}
+{% endblock %}
